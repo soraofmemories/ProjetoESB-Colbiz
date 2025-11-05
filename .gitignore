@@ -1,0 +1,8 @@
+# Visual Studio / IDE Files
+.vs/
+*.suo
+*.user
+
+# Build and Object files
+[Bb]in/
+[Oo]bj/

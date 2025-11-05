@@ -1,0 +1,6 @@
+@ProjetoESB_HostAddress = http://localhost:5076
+
+GET {{ProjetoESB_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
