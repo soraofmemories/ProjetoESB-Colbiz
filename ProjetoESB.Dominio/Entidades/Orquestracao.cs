@@ -11,5 +11,5 @@ public partial class Orquestracao
 
     public string? Descricao { get; set; }
 
-    public virtual ICollection<PassoOrquestracao> PassoOrquestracao { get; set; } = new List<PassoOrquestracao>();
+    public virtual ICollection<PassoOrquestracao> PassosOrquestracao { get; set; } = new List<PassoOrquestracao>();
 }
