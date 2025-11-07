@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProjetoESB.Dominio.Conectores;
 
 namespace ProjetoESB.Infra.Conectores
 {
-    public interface IConectorFactory
-    {
-        IConector Resolve(string tipo);
-    }
-
     public class ConectorFactory : IConectorFactory
     {
         private readonly IServiceProvider _serviceProvider;

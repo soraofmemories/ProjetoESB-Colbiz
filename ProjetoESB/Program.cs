@@ -1,16 +1,19 @@
+using ProjetoESB.Core.Services;
+using ProjetoESB.Infra.Conectores;
+using ProjetoESB.Infra.Repositorios;
+using ProjetoESB.Infra.Contexts;     // Importa a classe ESBContext do seu projeto .Infra
+using ProjetoESB.Dominio.Repositorios;
+using ProjetoESB.Dominio.Conectores;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Extensions.Http;
-using ProjetoESB.Dominio.Entidades;
-using ProjetoESB.Dominio.Repositorios;
-using ProjetoESB.Infra.Conectores;
-using ProjetoESB.Infra.Contexts;  // Importa a classe ESBContext do seu projeto .Infra
-using ProjetoESB.Infra.Orquestracoes;
-using ProjetoESB.Infra.Repositorios;
-using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var retryPolicy = HttpPolicyExtensions
     .HandleTransientHttpError() // 5xx, 408 e HttpRequestException
@@ -49,19 +52,21 @@ builder.Services.AddDbContext<ESBContext>(options =>
 //builder.Services.AddTransient<IConector, ConectorRest>(); // se quiser resolver genérico
 
 // se houver factory de conectores, registre a RestConnector em container específico (a factory é única na aplicação (AddSingleton))
-builder.Services.AddSingleton<IConectorFactory, ConectorFactory>();
+//builder.Services.AddSingleton<IConectorFactory, ConectorFactory>();
 
 // Configura a Injeção de Dependência para o Repositório
 // AddScoped: Cria uma nova instância a cada requisição HTTP (ideal para acesso a dados)
-builder.Services.AddScoped<IOrquestracaoRepositorio, OrquestracaoRepositorio>();
 builder.Services.AddScoped<IIntegracaoRepositorio, IntegracaoRepositorio>();
+builder.Services.AddScoped<IOrquestracaoRepositorio, OrquestracaoRepositorio>();
 builder.Services.AddScoped<ILogExecucaoRepositorio, LogExecucaoRepositorio>();
-builder.Services.AddScoped<OrquestradorService>();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Conectores e Fábrica
+builder.Services.AddHttpClient();
+builder.Services.AddScoped<IConector, ConectorRest>();
+builder.Services.AddScoped<IConectorFactory, ConectorFactory>();
+
+// Serviço principal de orquestração
+builder.Services.AddScoped<OrquestradorService>();
 
 var app = builder.Build();
 

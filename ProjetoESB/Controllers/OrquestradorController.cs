@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProjetoESB.Infra.Orquestracoes;
+using ProjetoESB.Core.Services;
 
 namespace ProjetoESB.Api.Controllers
 {
@@ -7,18 +7,18 @@ namespace ProjetoESB.Api.Controllers
     [Route("api/orquestrador")]
     public class OrquestradorController : ControllerBase
     {
-        private readonly OrquestradorService _service;
+        private readonly OrquestradorService _orquestrador;
 
-        public OrquestradorController(OrquestradorService service)
+        public OrquestradorController(OrquestradorService orquestrador)
         {
-            _service = service;
+            _orquestrador = orquestrador;
         }
 
         [HttpPost("{id}")]
         public async Task<IActionResult> Executar(int id)
         {
-            await _service.ExecutarOrquestracaoAsync(id);
-            return Ok($"Orquestração {id} executada.");
+            await _orquestrador.ExecutarOrquestracaoAsync(id);
+            return Ok(new { mensagem = $"Orquestração {id} executada." });
         }
     }
 }

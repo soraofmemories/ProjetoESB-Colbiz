@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Core\ProjetoESB.Core.csproj" />
     <ProjectReference Include="..\ProjetoESB.Dominio\ProjetoESB.Dominio.csproj" />
     <ProjectReference Include="..\ProjetoESB.Infra\ProjetoESB.Infra.csproj" />
   </ItemGroup>

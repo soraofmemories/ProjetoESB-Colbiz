@@ -1,8 +1,6 @@
-﻿
-using ProjetoESB.Infra.Conectores;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using ProjetoESB.Infra.Conectores;
 
+namespace ProjetoESB.Dominio.Conectores;
 public interface IConector
 {
     Task<ConectorResultado> ExecutarAsync(ConectorRequisicao requisicao, CancellationToken token = default);

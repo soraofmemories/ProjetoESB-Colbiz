@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Connections;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoESB.Infra.Conectores;
+using ProjetoESB.Dominio.Conectores;
 
 [ApiController]
 [Route("api/test")]
